@@ -63,4 +63,4 @@ pytest
 
 ## Credits
 
-Classification algorithm by a colleague. Packaged, tested and applied to disbursement analysis by Onki Wong. Explainer: [owangie.github.io/writing/neighbours-graph-theory](https://owangie.github.io/writing/neighbours-graph-theory/).
+Classification algorithm by [Vlad Gerasimov](https://github.com/voismager), software engineer, now at UNICEF. Packaged, tested and applied to disbursement analysis by Onki Wong. Explainer: [owangie.github.io/writing/neighbours-graph-theory](https://owangie.github.io/writing/neighbours-graph-theory/).
