@@ -34,7 +34,7 @@ project_df["Connectivity"] = project_df["Countries"].apply(lambda c: classify(G,
 
 ## The maths
 
-**Countries as a graph.** The border data defines a graph G = (V, E): each country or territory is a node in V, and each pair of neighbours is an edge in E (243 nodes, 588 edges).
+**Countries as a graph.** The border data defines a graph G = (V, E): each country or territory is a node in V, and each pair of neighbours is an edge in E (238 countries and territories with at least one neighbour, 588 edges; the interactive view also shows 5 territories with no listed neighbours).
 
 **StrongRegional: a connected induced subgraph.** For a project's set of countries S, take the induced subgraph G[S]: the nodes in S and only the edges between them. S is StrongRegional if G[S] is connected, meaning there is a path between every pair of countries in S that never leaves S. `networkx.is_connected` tests this with a breadth-first search from one node, visiting neighbours level by level, and checks whether every node was reached. Cost: O(|S| + edges within S).
 
@@ -50,7 +50,7 @@ The code computes the radius two neighbourhood N(u) ∪ N(N(u)) with set unions,
 
 ## Notes on the data
 
-- `data/borders.csv` has 588 neighbour pairs across 243 countries and territories. It includes some sea neighbours and overseas territories, so a few pairs will look surprising. Check the pairs that matter for your projects.
+- `data/borders.csv` has 588 neighbour pairs across 238 countries and territories. It includes some sea neighbours and overseas territories, so a few pairs will look surprising. Check the pairs that matter for your projects.
 - Self links in the source data were removed.
 - Changes from the first version: the graph is passed in explicitly; a country code missing from the graph can no longer be silently dropped and scored as connected; repeated codes are ignored.
 
@@ -64,3 +64,7 @@ pytest
 ## Credits
 
 Classification algorithm by [Vlad Gerasimov](https://github.com/voismager), software engineer, now at UNICEF. Packaged, tested and applied to disbursement analysis by Onki Wong. Explainer: [owangie.github.io/writing/neighbours-graph-theory](https://owangie.github.io/writing/neighbours-graph-theory/).
+
+## Centrality and communities
+
+`centrality.py` asks which countries are bridges rather than hubs. It computes betweenness centrality (Freeman 1977), finds communities with the Louvain method (Blondel et al. 2008) and reports their modularity, then draws `docs/neighbour_network_centrality.png`. On this data: 11 communities, modularity 0.76, average path length 6.0, diameter 15. Russia, the United States and France are the strongest bridges. The US and France rank high partly because of sea neighbours and overseas territories, and the France and Rwanda pair looks like an error in the source data.
